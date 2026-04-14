@@ -9,3 +9,10 @@ class detail (models.Model):
 
     def __str__(self):
         return self.name
+    
+class course (models.Model):
+    course_choices=[
+        ('', 'course'),
+        ( 'science', 'Science'),
+        ('act',"Act"),
+    ]

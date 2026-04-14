@@ -12,7 +12,7 @@ def home (request):
             decription=request.POST['description']
         )
         return redirect('home')
-    return render(request, 'home.html')
+    return render(request, 'home.html',{"error": "Invalid credentials"})
 
 
 from django.contrib.auth.models import User
