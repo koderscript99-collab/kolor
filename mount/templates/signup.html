@@ -1,11 +1,109 @@
-<!-- templates/signup.html -->
-<h2>Signup</h2>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+</head>
+<body>
+    <!-- templates/signup.html -->
+<div class="signup">
+<h2>SIGNUP</h2>
+</div>
 <form method="POST">
-    {% csrf_token %}
-    <input type="text" name="username" placeholder="Username"><br><br>
-    <input type="email" name="email" placeholder="Email"><br><br>
-    <input type="password" name="password" placeholder="Password"><br><br>
-    <button type="submit">Register</button>
-    <a href="/login">LOGIN</a>
+ {% csrf_token %} <br>
+    <div class="login-box">
+        <div class="login_box input">
+            <input type="text" name="username" placeholder="Username"><br><br>
+            <input type="email" name="email" placeholder="Email"><br><br>
+            <input type="password" name="password" placeholder="Password"><br><br>
+        <button type="submit">Register</button>
+
+    </div>
+    
 </form>
+<div class="p">
+    <p>I HAVE AN ACCOUNT</p><a href="/login">LOGIN</a>
+</body>
+<style>
+    body{
+    margin:0;
+    padding:0;
+    font-family: Arial, sans-serif;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(135deg,#101f61,#00f2fe);
+}
+.signup{
+    font-family: 'Courier New', Courier, monospace;
+    text-decoration-color: #101f61;
+    padding: auto;
+}
+.p{
+    color: antiquewhite;
+    font-style: italic;
+    font-size: smaller;
+}
+
+/* Login container */
+.login-box{
+    background:linear-gradient(rgb(5, 5, 85));
+    padding:40px;
+    width:300px;
+    border-radius:10px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+
+    /* animation */
+    animation:fadeOut 1.5s ease;
+}
+
+/* Heading */
+.login-box h2{
+    margin-bottom:20px;
+}
+
+/* Input fields */
+.login-box input{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+/* Button */
+.login-box button{
+    width:100%;
+    padding:10px;
+    border:none;
+    background:#4facfe;
+    color:white;
+    font-size:16px;
+    border-radius:5px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+/* Button animation */
+.login-box button:hover{
+    background:#00c6ff;
+    transform:scale(1.05);
+}
+
+/* Fade animation */
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(-40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+</style>
+</html>

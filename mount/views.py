@@ -3,31 +3,39 @@ from django.shortcuts import render, redirect
 from .models import detail
 
 # Create your views here.
-def home (request):
-    if request.method == "POST":
-        detail.objects.create(
-            name=request.POST['name'],
-            email=request.POST['email'],
-            level=request.POST['level'] ,
-            decription=request.POST['description']
-        )
-        return redirect('home')
-    return render(request, 'home.html',{"error": "Invalid credentials"})
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from .form import DetailForm
+from django.contrib.auth.decorators import login_required
 
+@login_required
+def home(request):
+    if request.method == "POST":
+        form = DetailForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            print("✅ SAVED")  # DEBUG
+            return redirect('home')
+        else:
+            print(form.errors)  # DEBUG
+    else:
+        form = DetailForm()
+
+    return render(request, 'home.html', {'form': form})
 
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
 def signup(request):
-    if request.method == "POST":
+    if request.method == "POST": 
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
 
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exists")
-            return redirect('signup')
+            return redirect('login')
 
         User.objects.create_user(
             username=username,
@@ -67,6 +75,17 @@ def logout_view(request):
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
+from .form import DetailForm
+from django.contrib.auth.decorators import login_required
+
 @login_required
 def home(request):
-    return render(request, 'home.html')
+    if request.method == "POST":
+        form = DetailForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = DetailForm()
+
+    return render(request, 'home.html', {'form': form})
