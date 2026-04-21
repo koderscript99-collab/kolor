@@ -15,13 +15,18 @@ def home(request):
         if form.is_valid():
             form.save()
             print("✅ SAVED")  # DEBUG
-            return redirect('home')
+            return redirect('success')
         else:
             print(form.errors)  # DEBUG
     else:
         form = DetailForm()
 
     return render(request, 'home.html', {'form': form})
+
+
+def success(request):
+    return render(request, 'success.html')
+
 
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
@@ -84,7 +89,7 @@ def home(request):
         form = DetailForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('success')
     else:
         form = DetailForm()
 
