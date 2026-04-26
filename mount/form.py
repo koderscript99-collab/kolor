@@ -1,7 +1,7 @@
 from django import forms
-from .models import detail
+from .models import Detail
 
 class DetailForm(forms.ModelForm):
     class Meta:
-        model = detail
-        fields = ['name', 'email', 'level',  'pics', 'active']
+        model = Detail
+        exclude = ['user']

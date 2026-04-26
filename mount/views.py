@@ -1,6 +1,8 @@
+from urllib import request
+
 import django
 from django.shortcuts import render, redirect
-from .models import detail
+from .models import Detail
 
 # Create your views here.
 from django.contrib.auth.decorators import login_required
@@ -14,16 +16,11 @@ def home(request):
         form = DetailForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            print("✅ SAVED")  # DEBUG
             return redirect('success')
-        else:
-            print(form.errors)  # DEBUG
     else:
         form = DetailForm()
 
     return render(request, 'home.html', {'form': form})
-
-
 def success(request):
     return render(request, 'success.html')
 
@@ -83,14 +80,44 @@ from django.shortcuts import render
 from .form import DetailForm
 from django.contrib.auth.decorators import login_required
 
-@login_required
-def home(request):
-    if request.method == "POST":
-        form = DetailForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('success')
-    else:
-        form = DetailForm()
+from django.contrib.auth import authenticate
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 
-    return render(request, 'home.html', {'form': form})
+@api_view(['POST'])
+def api_login(request):
+    username = request.data.get("username")
+    password = request.data.get("password")
+
+    user = authenticate(username=username, password=password)
+
+    if user:
+        token, _ = Token.objects.get_or_create(user=user)
+        return Response({"token": token.key})
+    return Response({"error": "Invalid credentials"}, status=400)
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
+from .models import Detail
+from .serializers import DetailSerializer
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_profile(request):
+    detail, _ = Detail.objects.get_or_create(user=request.user)
+    serializer = DetailSerializer(detail)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def update_profile(request):
+    detail, _ = Detail.objects.get_or_create(user=request.user)
+
+    serializer = DetailSerializer(detail, data=request.data, partial=True)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+
+    return Response(serializer.errors, status=400)

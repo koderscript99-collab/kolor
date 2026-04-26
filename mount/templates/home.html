@@ -1,28 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<h1>submission</h1>
-<body>
-    <h2>submit your info</h2>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
+<meta charset="UTF-8">
+<title>Profile Dashboard</title>
 
-    {{ form.as_p }}
-
-    <button type="submit">Submit</button>
-</form>
-</form>
 <style>
-    body{
-        background-color: rgb(143, 143, 219);
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        text-align: center;
-    }
-</style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(white)
+}
+
+/* 🔹 TOGGLE BUTTON */
+#toggle-btn {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+    padding: 10px;
+    background: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* 🔹 LAYOUT */
+.container {
+    display: flex;
+}
+
+/* 🔹 SIDEBAR (PROFILE PREVIEW) */
+.preview {
+    width: 250px;
+    height: 100vh;
+    background:linear-gradient(rgb(167, 230, 167));
+    padding: 20px;
+    border-right: 2px solid #3e50c8;
+    text-align: center;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    transition: transform 0.3s ease;
+}
+
+.preview.hide {
+    transform: translateX(-100%);
+}
+
+.preview img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
     
+}
+
+/* 🔹 MAIN CONTENT */
+.form-area {
+    margin-left: 250px;
+    padding: 40px;
+    width: 100%;
+    transition: margin-left 0.3s ease;
+}
+
+.form-area.full {
+    margin-left: 0;
+}
+
+/* 🔹 FORM STYLE */
+input {
+    display: block;
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    background: green;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔹 TOGGLE BUTTON -->
+<button id="toggle-btn">☰</button>
+
+<div class="container">
+
+    <!-- 🔹 LEFT SIDE (LIVE PROFILE) -->
+    <div class="preview" id="sidebar">
+        <img id="preview-img" src="https://via.placeholder.com/120">
+
+        <h2 id="preview-name">Your Name</h2>
+        <p id="preview-email">your@email.com</p>
+        <p id="preview-level">Your Level</p>
+    </div>
+
+    <!-- 🔹 RIGHT SIDE (FORM) -->
+    <div class="form-area" id="main">
+        <h2>Update Profile</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <input type="text" id="name" name="name" placeholder="Enter Name">
+            <input type="email" id="email" name="email" placeholder="Enter Email">
+            <input type="text" id="level" name="level" placeholder="Enter Level">
+            <input type="file" id="pics" name="pics">
+
+            <button type="submit">Save</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+// 🔹 LIVE PREVIEW
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const levelInput = document.getElementById("level");
+const picInput = document.getElementById("pics");
+
+nameInput.addEventListener("input", () => {
+    document.getElementById("preview-name").textContent =
+        nameInput.value || "Your Name";
+});
+
+emailInput.addEventListener("input", () => {
+    document.getElementById("preview-email").textContent =
+        emailInput.value || "your@email.com";
+});
+
+levelInput.addEventListener("input", () => {
+    document.getElementById("preview-level").textContent =
+        levelInput.value || "Your Level";
+});
+
+picInput.addEventListener("change", () => {
+    const file = picInput.files[0];
+    if (file) {
+        document.getElementById("preview-img").src =
+            URL.createObjectURL(file);
+    }
+});
+
+// 🔹 SIDEBAR TOGGLE
+const toggleBtn = document.getElementById("toggle-btn");
+const sidebar = document.getElementById("sidebar");
+const main = document.getElementById("main");
+
+toggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("hide");
+    main.classList.toggle("full");
+
+    // change icon
+    toggleBtn.textContent =
+        sidebar.classList.contains("hide") ? "☰" : "✖";
+});
+</script>
+
 </body>
 </html>
