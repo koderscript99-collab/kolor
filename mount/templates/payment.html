@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mini Bank Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f6f9;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* LEFT PANEL */
+        .left {
+            width: 30%;
+            background: #1e2a38;
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .profile {
+            background: #2c3e50;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .balance {
+            font-size: 24px;
+            margin-top: 10px;
+            color: #00ff99;
+        }
+
+        /* RIGHT PANEL */
+        .right {
+            width: 70%;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            width: 100%;
+            background: #1e2a38;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #34495e;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .tag {
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .deposit { background: #d4f8d4; }
+        .withdraw { background: #ffd6d6; }
+        .transfer { background: #d6e6ff; }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LEFT SIDE -->
+    <div class="left">
+        <div class="profile">
+            <h2>{{ user.username }}</h2>
+
+            <p>Email: {{ user.email }}</p>
+
+            <p>Phone: {{ detail.phone_number }}</p>
+
+            <p>Account No:</p>
+            <strong>{{ account.account_number }}</strong>
+
+            <div class="balance">
+                ₦ {{ account.balance }}
+            </div>
+        </div>
+
+        <h3>Quick Info</h3>
+        <p>Bank: {{ account.bank_name }}</p>
+        <p>Virtual Acc: {{ account.virtual_account_number }}</p>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="right">
+
+        <!-- TRANSACTION CARD -->
+        <div class="card">
+            <h3>Make Transaction</h3>
+
+            <form method="POST" action="{% url 'transaction' %}">
+                {% csrf_token %}
+
+                <label>Amount</label>
+                <input type="number" name="amount" required>
+
+                <label>Type</label>
+                <select name="transaction_type">
+                    <option value="deposit">Deposit</option>
+                    <option value="withdraw">Withdraw</option>
+                    <option value="transfer">Transfer</option>
+                </select>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <!-- DATA PURCHASE -->
+        <div class="card">
+            <h3>Buy Data</h3>
+
+            <form method="POST" action="{% url 'buy_data' %}">
+                {% csrf_token %}
+
+                <label>Network</label>
+                <select name="network">
+                    <option>MTN</option>
+                    <option>AIRTEL</option>
+                    <option>GLO</option>
+                    <option>9MOBILE</option>
+                </select>
+
+                <label>Phone Number</label>
+                <input type="text" name="phone_number">
+
+                <label>Amount</label>
+                <input type="number" name="amount">
+
+                <button type="submit">Purchase</button>
+            </form>
+        </div>
+
+        <!-- TRANSACTION HISTORY -->
+        <div class="card">
+            <h3>Recent Transactions</h3>
+
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+
+                {% for t in transactions %}
+                <tr>
+                    <td>
+                        <span class="tag {{ t.transaction_type }}">
+                            {{ t.transaction_type }}
+                        </span>
+                    </td>
+                    <td>₦ {{ t.amount }}</td>
+                    <td>{{ t.status }}</td>
+                    <td>{{ t.created_at }}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+
+    </div>
+</div>
+<form method="POST" action="{% url 'transaction' %}"></form>
+</body>
+</html>

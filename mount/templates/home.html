@@ -2,167 +2,258 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Profile Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
 
 <style>
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(white)
-}
-
-/* 🔹 TOGGLE BUTTON */
-#toggle-btn {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 1000;
-    padding: 10px;
-    background: black;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-/* 🔹 LAYOUT */
-.container {
-    display: flex;
-}
-
-/* 🔹 SIDEBAR (PROFILE PREVIEW) */
-.preview {
-    width: 250px;
-    height: 100vh;
-    background:linear-gradient(rgb(167, 230, 167));
-    padding: 20px;
-    border-right: 2px solid #3e50c8;
-    text-align: center;
-
-    position: fixed;
-    left: 0;
-    top: 0;
-
-    transition: transform 0.3s ease;
-}
-
-.preview.hide {
-    transform: translateX(-100%);
-}
-
-.preview img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
+    background: #eef3f7;
     
 }
 
-/* 🔹 MAIN CONTENT */
-.form-area {
-    margin-left: 250px;
-    padding: 40px;
-    width: 100%;
-    transition: margin-left 0.3s ease;
-}
-
-.form-area.full {
-    margin-left: 0;
-}
-
-/* 🔹 FORM STYLE */
-input {
-    display: block;
-    width: 300px;
-    padding: 10px;
-    margin-bottom: 15px;
-}
-
-button[type="submit"] {
-    padding: 10px 20px;
-    background: green;
+/* HEADER */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #2f8fa3;
     color: white;
-    border: none;
+    padding: 12px 15px;
+}
+
+.menu-btn {
+    font-size: 20px;
     cursor: pointer;
+}
+
+.header input {
+    width: 50%;
+    padding: 6px;
+    border-radius: 6px;
+    border: none;
+}
+
+/* SIDEBAR */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 240px;
+    height: 100%;
+    background: #2f8fa3;
+    color: white;
+    padding: 20px;
+    transition: 0.3s;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar h3 {
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 20px;
+    margin: 5px 0;
+    color: rgb(74, 8, 8);
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.sidebar a:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* MAIN */
+.main {
+    padding: 15px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+/* TABLE */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    color: #777;
+}
+
+tr {
+    border-bottom: 1px solid #eee;
+}
+
+/* STATUS */
+.status {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.pending {
+    background: #ffe0b2;
+    color: #ff9800;
+}
+
+.complete {
+    background: #c8e6c9;
+    color: #2e7d32;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.small-card {
+    background: white;
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* BOTTOM NAV */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+}
+
+.bottom-nav a {
+    text-decoration: none;
+    color: #555;
+    font-size: 12px;
+}
+
+/* DESKTOP */
+@media(min-width: 768px){
+    .sidebar {
+        left: 0;
+    }
+
+    .main {
+        margin-left: 240px;
+    }
+
+    
+    
+}
+.s_logout{
+    color: rgb(0, 0, 0);
+    font-size: large;
+    padding-top:250px;
+    
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🔹 TOGGLE BUTTON -->
-<button id="toggle-btn">☰</button>
+<!-- HEADER -->
+<div class="header">
+    <span class="menu-btn" onclick="toggleMenu()">☰</span>
+    <input placeholder="Search...">
+    <span>👤</span>
+</div>
 
-<div class="container">
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+    <span class="menu-btn" onclick="toggleMenu()">☰</span>
+    <h3>Hospital</h3>
+    <a href="/home/">Dashboard<br>
+    <a href="/payment/">Payment</a>
+    <a href="/report/">Reports</a>
+<div class="s_logout">
+    <a href="/logout/">Logout⛔</a>
+</div>
+</div>
 
-    <!-- 🔹 LEFT SIDE (LIVE PROFILE) -->
-    <div class="preview" id="sidebar">
-        <img id="preview-img" src="https://via.placeholder.com/120">
+<!-- MAIN -->
+<div class="main">
 
-        <h2 id="preview-name">Your Name</h2>
-        <p id="preview-email">your@email.com</p>
-        <p id="preview-level">Your Level</p>
+    <!-- TABLE -->
+    <div class="card">
+        <h3>Patient Details</h3>
+
+        <div class="table-container">
+            <table>
+                <tr>{% for d in details %}
+                    <tr>
+                        <input type="text">
+            </table>
+        {% if d.status %}
+            <span class="status complete">Complete</span>
+        {% else %}
+            <span class="status pending">Pending</span>
+        {% endif %}
+    </td>
+</tr>
+{% endfor %}
+        
+                </tr>
+            </table>
+        </div>
     </div>
 
-    <!-- 🔹 RIGHT SIDE (FORM) -->
-    <div class="form-area" id="main">
-        <h2>Update Profile</h2>
+    <!-- CARDS -->
+    <div class="grid">
+        <div class="small-card">
+            <h4>Prescriptions</h4>
+            <p>3 Active</p>
+        </div>
 
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-
-            <input type="text" id="name" name="name" placeholder="Enter Name">
-            <input type="email" id="email" name="email" placeholder="Enter Email">
-            <input type="text" id="level" name="level" placeholder="Enter Level">
-            <input type="file" id="pics" name="pics">
-
-            <button type="submit">Save</button>
-        </form>
+        <div class="small-card">
+            <h4>Diagnosis</h4>
+            <p>Stable</p>
+        </div>
     </div>
 
 </div>
 
 <script>
-// 🔹 LIVE PREVIEW
-const nameInput = document.getElementById("name");
-const emailInput = document.getElementById("email");
-const levelInput = document.getElementById("level");
-const picInput = document.getElementById("pics");
-
-nameInput.addEventListener("input", () => {
-    document.getElementById("preview-name").textContent =
-        nameInput.value || "Your Name";
-});
-
-emailInput.addEventListener("input", () => {
-    document.getElementById("preview-email").textContent =
-        emailInput.value || "your@email.com";
-});
-
-levelInput.addEventListener("input", () => {
-    document.getElementById("preview-level").textContent =
-        levelInput.value || "Your Level";
-});
-
-picInput.addEventListener("change", () => {
-    const file = picInput.files[0];
-    if (file) {
-        document.getElementById("preview-img").src =
-            URL.createObjectURL(file);
-    }
-});
-
-// 🔹 SIDEBAR TOGGLE
-const toggleBtn = document.getElementById("toggle-btn");
-const sidebar = document.getElementById("sidebar");
-const main = document.getElementById("main");
-
-toggleBtn.addEventListener("click", () => {
-    sidebar.classList.toggle("hide");
-    main.classList.toggle("full");
-
-    // change icon
-    toggleBtn.textContent =
-        sidebar.classList.contains("hide") ? "☰" : "✖";
-});
+function toggleMenu() {
+    document.getElementById("sidebar").classList.toggle("active");
+}
 </script>
 
 </body>
