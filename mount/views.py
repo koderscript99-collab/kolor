@@ -488,9 +488,9 @@ def transaction(request):
             status="successful"
         )
 
-        return redirect("home")
+        return redirect("success")
 
-    return redirect("home")
+    return redirect("success")
 
 
 from django.shortcuts import render, redirect
