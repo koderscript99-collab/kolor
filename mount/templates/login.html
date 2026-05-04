@@ -3,115 +3,253 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login</title>
+<title>Kolor - Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
 
 <style>
-body {
+  * {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom right, #f7c58d, #dff0c2);
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #111;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-}
+    min-height: 100vh;
+    padding: 20px;
+  }
 
-/* Card */
-.container {
-    background: #f4e1c1;
-    width: 320px;
-    padding: 25px;
-    border-radius: 25px;
-    text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
+  /* Logo circle */
+  .logo-wrap {
+    margin-bottom: 28px;
+    animation: fadeDown 0.6s ease both;
+  }
 
-/* Date badge */
-.date {
-    display: inline-block;
-    padding: 5px 15px;
-    border-radius: 20px;
-    background: linear-gradient(to right, orange, green);
+  .logo-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4facfe 0%, #0078ff 60%, #0044cc 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 24px rgba(0, 120, 255, 0.45);
+  }
+
+  .logo-circle span {
+    font-size: 32px;
+    font-weight: 900;
     color: white;
-    font-size: 14px;
+    letter-spacing: -1px;
+  }
+
+  .brand-name {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 28px;
+    font-weight: 900;
+    background: linear-gradient(90deg, #7dd3fc, #3b82f6, #1d4ed8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 1px;
+  }
+
+  /* Card */
+  .card {
+    background: #1a1a1a;
+    width: 100%;
+    max-width: 380px;
+    padding: 28px 24px 20px;
+    border-radius: 16px;
+    animation: fadeUp 0.7s ease 0.1s both;
+  }
+
+  /* Inputs */
+  .input-group {
     margin-bottom: 10px;
-}
+  }
 
-/* Title */
-h2 {
-    margin: 10px 0 5px;
-    color: #2d7a2d;
-}
-
-.subtitle {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-/* Inputs */
-input {
+  input[type="text"],
+  input[type="password"] {
     width: 100%;
-    padding: 12px;
-    margin: 10px 0;
+    padding: 14px 16px;
+    background: #2a2a2a;
+    border: 1.5px solid #333;
     border-radius: 10px;
-    border: none;
-    background: #eee;
-    font-size: 14px;
-}
+    color: #e0e0e0;
+    font-size: 15px;
+    font-family: 'Nunito', sans-serif;
+    outline: none;
+    transition: border-color 0.25s;
+  }
 
-/* Button */
-button {
+  input::placeholder {
+    color: #666;
+  }
+
+  input:focus {
+    border-color: #3b82f6;
+  }
+
+  /* Login button */
+  .btn-login {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     border: none;
-    border-radius: 20px;
-    background: linear-gradient(to right, orange, green);
+    border-radius: 10px;
+    background: linear-gradient(90deg, #4facfe 0%, #0078ff 100%);
     color: white;
     font-size: 16px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
     cursor: pointer;
     margin-top: 10px;
-}
+    transition: opacity 0.2s, transform 0.15s;
+    letter-spacing: 0.3px;
+  }
 
-/* Circle design */
-.circle {
-    margin: 25px auto;
-    width: 80px;
-    height: 80px;
-    border: 3px dashed #333;
-    border-radius: 50%;
-}
+  .btn-login:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
 
-/* Footer text */
-.footer {
-    font-size: 12px;
-    color: #333;
-}
+  .btn-login:active {
+    transform: translateY(0);
+  }
+
+  /* Forgot password */
+  .forgot {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 14px;
+    color: #5ba4f5;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .forgot:hover {
+    text-decoration: underline;
+  }
+
+  /* Divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 22px 0;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: #333;
+  }
+
+  .divider span {
+    font-size: 13px;
+    color: #555;
+    white-space: nowrap;
+  }
+
+  /* Create account button */
+  .btn-create {
+    width: 100%;
+    padding: 14px;
+    border: 1.5px solid #3b82f6;
+    border-radius: 10px;
+    background: transparent;
+    color: #5ba4f5;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    letter-spacing: 0.2px;
+  }
+
+  .btn-create:hover {
+    background: rgba(59, 130, 246, 0.08);
+  }
+
+  /* Meta footer */
+  .meta-footer {
+    margin-top: 28px;
+    text-align: center;
+    animation: fadeUp 0.7s ease 0.25s both;
+  }
+
+  .meta-logo {
+    font-size: 13px;
+    color: #444;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .meta-logo span {
+    font-size: 16px;
+    margin-right: 4px;
+  }
+
+  /* Animations */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 </style>
-
 </head>
 <body>
 
-<div class="container">
+  <!-- Logo -->
+  <div class="logo-wrap">
+    <div class="logo-circle">
+      <span>K</span>
+    </div>
+    <div class="brand-name">kolor</div>
+  </div>
 
-    <div class="date">WELCOME</div>
-
-    <h2>Login</h2>
-    <div class="subtitle"></div>
-
+  <!-- Card -->
+  <div class="card">
     <form method="POST">
-        {% csrf_token %}
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
+      {% csrf_token %}
 
-        <button type="submit">Login</button>
+      <div class="input-group">
+        <input type="text" name="username" placeholder="Mobile number or email" required>
+      </div>
+
+      <div class="input-group">
+        <input type="password" name="password" placeholder="Password" required>
+      </div>
+
+      <button class="btn-login" type="submit">Log in</button>
     </form>
 
-    <div class="circle"></div>
+    <div class="forgot">Forgot password?</div>
 
-    <div class="footer">Happy Republic Day</div>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span>or</span>
+      <div class="divider-line"></div>
+    </div>
 
-</div>
+    <button class="btn-create" type="button">Create new account</button>
+  </div>
+
+  <!-- Footer -->
+  <div class="meta-footer">
+    <div class="meta-logo"><span>∞</span> Meta</div>
+  </div>
 
 </body>
 </html>

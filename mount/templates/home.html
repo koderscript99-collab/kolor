@@ -3,186 +3,341 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard</title>
+<title>Register — KOLORS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
 <style>
-* {
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+:root {
+    --teal:    #2f8fa3;
+    --teal-dk: #1e6e82;
+    --dark:    #1e2a38;
+    --accent:  #00ff99;
+    --bg:      #eef3f7;
+    --white:   #ffffff;
+    --muted:   #6b7a8d;
+    --border:  #d8e2ec;
+    --error:   #e74c3c;
+    --success: #2ecc71;
 }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    margin: 0;
-    background: #eef3f7;
-    
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* HEADER */
+/* ── HEADER ──────────────────────────────── */
 .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #2f8fa3;
+    background: var(--teal);
     color: white;
     padding: 12px 15px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.menu-btn {
-    font-size: 20px;
-    cursor: pointer;
+.menu-btn { font-size: 20px; cursor: pointer; }
+
+.header-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    letter-spacing: .5px;
 }
 
-.header input {
-    width: 50%;
-    padding: 6px;
-    border-radius: 6px;
-    border: none;
-}
-
-/* SIDEBAR */
+/* ── SIDEBAR ─────────────────────────────── */
 .sidebar {
     position: fixed;
-    top: 0;
-    left: -260px;
-    width: 240px;
-    height: 100%;
-    background: #2f8fa3;
+    top: 0; left: -260px;
+    width: 240px; height: 100%;
+    background: var(--teal);
     color: white;
     padding: 20px;
-    transition: 0.3s;
+    transition: .3s;
+    z-index: 200;
 }
-
-.sidebar.active {
-    left: 0;
-}
-
-.sidebar h3 {
-    margin-bottom: 20px;
-}
-
+.sidebar.active { left: 0; }
+.sidebar h3 { font-family: 'Syne', sans-serif; margin-bottom: 20px; font-size: 22px; }
 .sidebar a {
     display: block;
-    padding: 20px;
+    padding: 14px 20px;
     margin: 5px 0;
-    color: rgb(74, 8, 8);
+    color: white;
     text-decoration: none;
-    border-radius: 6px;
-}
-
-.sidebar a:hover {
-    background: rgba(255,255,255,0.2);
-}
-
-/* MAIN */
-.main {
-    padding: 15px;
-}
-
-/* CARD */
-.card {
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-.card h3 {
-    margin-top: 0;
-}
-
-/* TABLE */
-.table-container {
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
+    border-radius: 8px;
     font-size: 14px;
+    font-weight: 500;
+    transition: background .2s;
+}
+.sidebar a:hover,
+.sidebar a.active-link { background: rgba(255,255,255,.18); }
+.sidebar a.active-link { font-weight: 600; }
+.s_logout { padding-top: 240px; }
+.s_logout a { color: #ffb3b3; }
+
+/* ── MAIN ────────────────────────────────── */
+.main {
+    padding: 24px 16px 100px;
+    max-width: 680px;
+    margin: 0 auto;
+    width: 100%;
 }
 
-th, td {
-    padding: 10px;
-    text-align: left;
+/* ── PAGE HEADING ────────────────────────── */
+.page-heading {
+    margin-bottom: 24px;
+}
+.page-heading h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    color: var(--dark);
+    line-height: 1.2;
+}
+.page-heading p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 6px;
 }
 
-th {
-    color: #777;
+/* ── STEPS BAR ───────────────────────────── */
+.steps {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
 }
-
-tr {
-    border-bottom: 1px solid #eee;
+.step {
+    flex: 1;
+    height: 4px;
+    border-radius: 4px;
+    background: var(--border);
+    transition: background .4s;
 }
+.step.done  { background: var(--teal); }
+.step.active { background: var(--teal); opacity: .5; }
 
-/* STATUS */
-.status {
-    padding: 4px 10px;
-    border-radius: 20px;
+/* ── CARD ────────────────────────────────── */
+.card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    margin-bottom: 20px;
+}
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.card-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: #e6f4f7;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+.card-header h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    color: var(--dark);
+}
+.card-header span {
     font-size: 12px;
+    color: var(--muted);
+    display: block;
+    margin-top: 2px;
+    font-weight: 400;
 }
 
-.pending {
-    background: #ffe0b2;
-    color: #ff9800;
-}
-
-.complete {
-    background: #c8e6c9;
-    color: #2e7d32;
-}
-
-/* GRID */
-.grid {
+/* ── FORM ────────────────────────────────── */
+.form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 14px;
 }
 
-.small-card {
-    background: white;
-    padding: 12px;
+.field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+.field:last-child { margin-bottom: 0; }
+
+.field label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    margin-bottom: 6px;
+}
+
+.field input,
+.field select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
     border-radius: 10px;
-    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--dark);
+    background: #fafdff;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    appearance: none;
 }
 
-/* BOTTOM NAV */
+.field input:focus,
+.field select:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(47,143,163,.12);
+    background: var(--white);
+}
+
+.field input.error { border-color: var(--error); }
+
+.field .hint {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+.field .err-msg {
+    font-size: 11px;
+    color: var(--error);
+    margin-top: 4px;
+    display: none;
+}
+.field input.error + .err-msg,
+.field input.error ~ .err-msg { display: block; }
+
+/* prefix wrapper */
+.input-prefix {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fafdff;
+    transition: border-color .2s, box-shadow .2s;
+}
+.input-prefix:focus-within {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(47,143,163,.12);
+    background: var(--white);
+}
+.input-prefix .pre {
+    padding: 11px 12px;
+    background: #eef3f7;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    border-right: 1.5px solid var(--border);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.input-prefix input {
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    flex: 1;
+}
+
+/* select arrow */
+.select-wrap { position: relative; }
+.select-wrap::after {
+    content: '▾';
+    position: absolute;
+    right: 14px; top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* ── DIVIDER ─────────────────────────────── */
+.divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 20px 0;
+}
+
+/* ── SUBMIT BUTTON ───────────────────────── */
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: var(--teal);
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    letter-spacing: .4px;
+    transition: background .2s, transform .15s, box-shadow .2s;
+    margin-top: 4px;
+}
+.btn-submit:hover {
+    background: var(--teal-dk);
+    box-shadow: 0 4px 14px rgba(47,143,163,.35);
+    transform: translateY(-1px);
+}
+.btn-submit:active { transform: translateY(0); }
+
+/* ── SUCCESS BANNER ──────────────────────── */
+.success-banner {
+    display: none;
+    background: #e6f9f0;
+    border: 1.5px solid var(--success);
+    color: #1a7a47;
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.success-banner.show { display: flex; }
+
+/* ── BOTTOM NAV ──────────────────────────── */
 .bottom-nav {
     position: fixed;
-    bottom: 0;
-    width: 100%;
+    bottom: 0; width: 100%;
     background: white;
     display: flex;
     justify-content: space-around;
     padding: 10px 0;
-    box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 -2px 8px rgba(0,0,0,.08);
 }
-
 .bottom-nav a {
     text-decoration: none;
     color: #555;
     font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
 }
+.bottom-nav a.active { color: var(--teal); font-weight: 600; }
+.bottom-nav .nav-icon { font-size: 18px; }
 
-/* DESKTOP */
-@media(min-width: 768px){
-    .sidebar {
-        left: 0;
-    }
-
-    .main {
-        margin-left: 240px;
-    }
-
-    
-    
-}
-.s_logout{
-    color: rgb(0, 0, 0);
-    font-size: large;
-    padding-top:250px;
-    
-
+/* ── DESKTOP ─────────────────────────────── */
+@media(min-width: 768px) {
+    .sidebar { left: 0; }
+    .main { margin-left: 240px; max-width: none; }
+    .bottom-nav { display: none; }
+    .header .menu-btn { display: none; }
 }
 </style>
 </head>
@@ -192,68 +347,333 @@ tr {
 <!-- HEADER -->
 <div class="header">
     <span class="menu-btn" onclick="toggleMenu()">☰</span>
-    <input placeholder="Search...">
+    <span class="header-title">KOLORS</span>
     <span>👤</span>
 </div>
 
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
     <span class="menu-btn" onclick="toggleMenu()">☰</span>
-    <h3>Hospital</h3>
-    <a href="/home/">Dashboard<br>
+    <h3>KOLORS</h3>
+    <a href="/home/">Dashboard</a>
+    <a href="/register/" class="active-link">Register</a>
     <a href="/payment/">Payment</a>
     <a href="/report/">Reports</a>
-<div class="s_logout">
-    <a href="/logout/">Logout⛔</a>
-</div>
+    <div class="s_logout">
+        <a href="/logout/">Logout ⛔</a>
+    </div>
 </div>
 
-<!-- MAIN -->
+<!-- MAIN CONTENT -->
 <div class="main">
 
-    <!-- TABLE -->
-    <div class="card">
-        <h3>Patient Details</h3>
-
-        <div class="table-container">
-            <table>
-                <tr>{% for d in details %}
-                    <tr>
-                        <input type="text">
-            </table>
-        {% if d.status %}
-            <span class="status complete">Complete</span>
-        {% else %}
-            <span class="status pending">Pending</span>
-        {% endif %}
-    </td>
-</tr>
-{% endfor %}
-        
-                </tr>
-            </table>
-        </div>
+    <div class="page-heading">
+        <h2>Create User Account</h2>
+        <p>Fill in the details below to set up a payment-ready profile.</p>
     </div>
 
-    <!-- CARDS -->
-    <div class="grid">
-        <div class="small-card">
-            <h4>Prescriptions</h4>
-            <p>3 Active</p>
-        </div>
-
-        <div class="small-card">
-            <h4>Diagnosis</h4>
-            <p>Stable</p>
-        </div>
+    <!-- PROGRESS STEPS -->
+    <div class="steps" id="steps">
+        <div class="step active" id="step1"></div>
+        <div class="step" id="step2"></div>
+        <div class="step" id="step3"></div>
     </div>
 
+    <!-- SUCCESS BANNER -->
+    <div class="success-banner" id="successBanner">
+        ✅ &nbsp; Account created successfully! Redirecting to Payment…
+    </div>
+
+   
+    
+
+        <!-- SECTION 1: Personal Info -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">👤</div>
+                <div>
+                    <h3>Personal Information</h3>
+                    <span>Basic identity details</span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="field">
+                    <label>First Name</label>
+                    <input type="text" name="first_name" id="first_name" placeholder="e.g. Amaka" required>
+                    <span class="err-msg">First name is required.</span>
+                </div>
+                <div class="field">
+                    <label>Last Name</label>
+                    <input type="text" name="last_name" id="last_name" placeholder="e.g. Obi" required>
+                    <span class="err-msg">Last name is required.</span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Username</label>
+                <input type="text" name="username" id="username" placeholder="e.g. amaka_obi" required>
+                <span class="hint">Used as your display name on the payment page.</span>
+                <span class="err-msg">Username is required.</span>
+            </div>
+
+            <div class="field">
+                <label>Email Address</label>
+                <input type="email" name="email" id="email" placeholder="amaka@example.com" required>
+                <span class="err-msg">A valid email is required.</span>
+            </div>
+        </div>
+
+        <!-- SECTION 2: Contact -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">📞</div>
+                <div>
+                    <h3>Contact Details</h3>
+                    <span>Phone & address information</span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Phone Number</label>
+                <div class="input-prefix">
+                    <span class="pre">+234</span>
+                    <input type="tel" name="phone_number" id="phone_number"
+                           placeholder="0812 345 6789" maxlength="11" required>
+                </div>
+                <span class="hint">Nigerian number used for data purchase & transactions.</span>
+                <span class="err-msg" style="display:none" id="phoneErr">Valid phone number required.</span>
+            </div>
+
+            <div class="field">
+                <label>State</label>
+                <div class="select-wrap">
+                    <select name="state" id="state">
+                        <option value="">— Select state —</option>
+                        <option>Lagos</option><option>Abuja</option><option>Kano</option>
+                        <option>Ogun</option><option>Rivers</option><option>Oyo</option>
+                        <option>Enugu</option><option>Delta</option><option>Anambra</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: Account / Banking -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">🏦</div>
+                <div>
+                    <h3>Account & Banking</h3>
+                    <span>Linked to your payment dashboard</span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="field">
+                    <label>Bank Name</label>
+                    <div class="select-wrap">
+                        <select name="bank_name" id="bank_name" required>
+                            <option value="">— Select —</option>
+                            <option>Access Bank</option>
+                            <option>GTBank</option>
+                            <option>First Bank</option>
+                            <option>Zenith Bank</option>
+                            <option>UBA</option>
+                            <option>Kuda Bank</option>
+                            <option>OPay</option>
+                            <option>PalmPay</option>
+                            <option>Moniepoint</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Account Type</label>
+                    <div class="select-wrap">
+                        <select name="account_type">
+                            <option value="savings">Savings</option>
+                            <option value="current">Current</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Account Number</label>
+                <input type="text" name="account_number" id="account_number"
+                       placeholder="10-digit NUBAN" maxlength="10"
+                       pattern="\d{10}" required>
+                <span class="hint">Your 10-digit NUBAN account number.</span>
+                <span class="err-msg">Enter a valid 10-digit account number.</span>
+            </div>
+
+            <div class="field">
+                <label>Virtual Account Number <small style="font-weight:400;text-transform:none">(optional)</small></label>
+                <input type="text" name="virtual_account_number" id="virtual_account_number"
+                       placeholder="Auto-generated if left blank" maxlength="10">
+            </div>
+
+            <hr class="divider">
+
+            <div class="field">
+                <label>Opening Balance (₦)</label>
+                <div class="input-prefix">
+                    <span class="pre">₦</span>
+                    <input type="number" name="balance" id="balance"
+                           placeholder="0.00" min="0" step="0.01" required>
+                </div>
+                <span class="hint">Initial wallet balance shown on your payment page.</span>
+                <span class="err-msg" id="balErr" style="display:none">Please enter a valid balance.</span>
+            </div>
+        </div>
+
+        <!-- SECTION 4: Security -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">🔒</div>
+                <div>
+                    <h3>Security</h3>
+                    <span>Set a login password</span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="field">
+                    <label>Password</label>
+                    <input type="password" name="password1" id="password1"
+                           placeholder="Min. 8 characters" required minlength="8">
+                    <span class="err-msg">Password must be at least 8 characters.</span>
+                </div>
+                <div class="field">
+                    <label>Confirm Password</label>
+                    <input type="password" name="password2" id="password2"
+                           placeholder="Re-enter password" required>
+                    <span class="err-msg" id="pwErr">Passwords do not match.</span>
+                </div>
+            </div>
+        </div>
+
+    <form method="POST" action="{% url 'signup' %}" id="registerForm">
+
+    {% csrf_token %}
+
+    <!-- ALL YOUR INPUTS/STEPS/CARDS STAY HERE -->
+
+    <button type="submit" class="btn-submit" id="submitBtn">
+        Create Account &amp; Go to Payment →
+    </button>
+
+</form>
+
+    </form>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+    <a href="/home/"><span class="nav-icon">🏠</span>Home</a>
+    <a href="/register/" class="active"><span class="nav-icon">➕</span>Register</a>
+    <a href="/payment/"><span class="nav-icon">💳</span>Payment</a>
+    <a href="/report/"><span class="nav-icon">📊</span>Reports</a>
 </div>
 
 <script>
 function toggleMenu() {
-    document.getElementById("sidebar").classList.toggle("active");
+    document.getElementById('sidebar').classList.toggle('active');
 }
+
+/* ── STEP PROGRESS ── */
+function updateSteps(n) {
+    ['step1','step2','step3'].forEach((id, i) => {
+        const el = document.getElementById(id);
+        el.className = 'step ' + (i < n ? 'done' : i === n ? 'active' : '');
+    });
+}
+
+document.getElementById('registerForm').addEventListener('input', function () {
+    const p1 = document.getElementById('first_name').value.trim();
+    const p2 = document.getElementById('email').value.trim();
+    const p3 = document.getElementById('account_number').value.trim();
+    let step = 0;
+    if (p1) step = 1;
+    if (p2) step = 2;
+    if (p3.length === 10) step = 3;
+    updateSteps(step);
+});
+
+/* ── VALIDATION ── */
+document.getElementById('registerForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    let valid = true;
+
+    // required text/email fields
+    ['first_name','last_name','username','email','account_number'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el.value.trim()) {
+            el.classList.add('error');
+            valid = false;
+        } else {
+            el.classList.remove('error');
+        }
+    });
+
+    // phone
+    const phone = document.getElementById('phone_number');
+    if (!phone.value.trim() || phone.value.trim().length < 10) {
+        phone.classList.add('error');
+        document.getElementById('phoneErr').style.display = 'block';
+        valid = false;
+    } else {
+        phone.classList.remove('error');
+        document.getElementById('phoneErr').style.display = 'none';
+    }
+
+    // account number digits
+    const acc = document.getElementById('account_number');
+    if (!/^\d{10}$/.test(acc.value.trim())) {
+        acc.classList.add('error');
+        valid = false;
+    }
+
+    // balance
+    const bal = document.getElementById('balance');
+    if (bal.value === '' || Number(bal.value) < 0) {
+        document.getElementById('balErr').style.display = 'block';
+        valid = false;
+    } else {
+        document.getElementById('balErr').style.display = 'none';
+    }
+
+    // passwords
+    const pw1 = document.getElementById('password1');
+    const pw2 = document.getElementById('password2');
+    if (pw1.value.length < 8) { pw1.classList.add('error'); valid = false; }
+    else pw1.classList.remove('error');
+
+    if (pw1.value !== pw2.value) {
+        pw2.classList.add('error');
+        document.getElementById('pwErr').style.display = 'block';
+        valid = false;
+    } else {
+        pw2.classList.remove('error');
+        document.getElementById('pwErr').style.display = 'none';
+    }
+
+    if (!valid) return;
+
+    // SUCCESS — show banner then submit (or redirect)
+    updateSteps(3);
+    document.getElementById('successBanner').classList.add('show');
+    document.getElementById('submitBtn').disabled = true;
+    document.getElementById('submitBtn').textContent = 'Saving…';
+
+    // In a real Django app this would just be this.submit()
+    // For demo we simulate a brief delay then navigate
+    setTimeout(() => {
+        this.submit();          // uncomment for real Django
+        // window.location = '/payment/';  // fallback demo redirect
+    }, 1500);
+});
 </script>
 
 </body>

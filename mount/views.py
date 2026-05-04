@@ -27,6 +27,8 @@ def home(request):
 def success(request):
     return render(request, 'success.html')
 
+
+
 def payment(request):
     return render(request, 'payment.html')
 
@@ -55,7 +57,7 @@ def signup(request):
         )
 
         messages.success(request, "Account created successfully")
-        return redirect('login')
+        return redirect('payment')
 
     return render(request, 'signup.html')
 
@@ -545,3 +547,6 @@ def flutterwave_webhook(request):
     print(request.body)
 
     return HttpResponse(status=200)
+
+
+

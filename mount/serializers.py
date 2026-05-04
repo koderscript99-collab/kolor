@@ -10,8 +10,7 @@ class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model=Account
         fields ="__all__"
-
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Transaction
-        field ="__all__"
+        model = Transaction
+        fields = "__all__"
