@@ -57,7 +57,7 @@ def signup(request):
         )
 
         messages.success(request, "Account created successfully")
-        return redirect('payment')
+        return redirect('login')
 
     return render(request, 'signup.html')
 
