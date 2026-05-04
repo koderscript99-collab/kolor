@@ -28,9 +28,9 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    "kolor-2.onrender.com",
     "127.0.0.1",
     "localhost",
-    "xxxxx.ngrok-free.app"
 ]
 
 
