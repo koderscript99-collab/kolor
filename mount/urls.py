@@ -13,7 +13,7 @@ urlpatterns = [
     path('success/', views.success, name='success'),
 
     # API (separate from normal login!)
-    path('api/login/', views.api_login, name='api_login'),
+    path('api/login/', views.login_view, name='api_login'),
     path('api/profile/', views.get_profile, name='profile'),
     path('api/profile/update/', views.update_profile, name='update_profile'),
 
