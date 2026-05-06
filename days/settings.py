@@ -32,7 +32,7 @@ FLW_WEBHOOK_SECRET = config("FLW_WEBHOOK_SECRET")
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "kolor-2.onrender.com",
+    "kolor-1.onrender.com",
     "127.0.0.1",
     "localhost",
     "celibate-cheesy-eatable.ngrok-free.dev"
