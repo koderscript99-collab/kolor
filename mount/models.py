@@ -82,6 +82,14 @@ class Transaction(models.Model):
     class Meta:
         ordering = ['-created_at']
 
+    def save(self, *args, **kwargs):
+        if not self.reference:
+            self.reference = str(uuid.uuid4())
+
+        super().save(*args, **kwargs)
+
+    
+
     def __str__(self):
         return f"{self.user.username} - {self.transaction_type} - {self.amount}"
     
@@ -125,3 +133,11 @@ class DataPurchase(models.Model):
 
     def __str__(self):
         return f"{self.phone_number} - {self.network}"
+
+
+# models.py
+from django.db import models
+
+class Report(models.Model):
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

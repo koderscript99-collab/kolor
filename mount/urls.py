@@ -27,6 +27,10 @@ urlpatterns = [
     path('withdraw/', views.withdraw, name='withdraw'),
     path('transfer/', views.transfer, name='transfer'),
     path('buy-data/', views.buy_data, name='buy_data'),
-
+    path('succed-data/', views.succed_data, name='succed_data'),
+    path('low-balance/', views.low_balance, name='low_balance'),
+    path('succed-trans/', views.succed_trans, name='succed_trans'),
+    path('payment_success/', views.payment_success, name='payment_success'),
+    path('report/', views.report_view, name='report'),
     path("webhook/", views.flutterwave_webhook, name="webhook"),
 ]

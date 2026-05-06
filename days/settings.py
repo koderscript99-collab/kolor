@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 from decouple import config
 from pathlib import Path
+import os
 
+import dj_database_url
 import rest_framework
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,7 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-dev-key')
+FLW_SECRET_KEY = config("FLW_SECRET_KEY")
+FLW_WEBHOOK_SECRET = config("FLW_WEBHOOK_SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,6 +35,11 @@ ALLOWED_HOSTS = [
     "kolor-2.onrender.com",
     "127.0.0.1",
     "localhost",
+    "celibate-cheesy-eatable.ngrok-free.dev"
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://celibate-cheesy-eatable.ngrok-free.dev"
 ]
 
 
@@ -82,13 +91,22 @@ WSGI_APPLICATION = 'days.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600
+    )
 }
 
+# If DATABASE_URL is not set, fall back to SQLite for local development
+if not os.environ.get('DATABASE_URL'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators

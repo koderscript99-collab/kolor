@@ -384,8 +384,8 @@ body {
         ✅ &nbsp; Account created successfully! Redirecting to Payment…
     </div>
 
-   
-    
+    <form method="POST" action="{% url 'signup' %}" id="registerForm">
+    {% csrf_token %}
 
         <!-- SECTION 1: Personal Info -->
         <div class="card">
@@ -554,17 +554,9 @@ body {
             </div>
         </div>
 
-    <form method="POST" action="{% url 'signup' %}" id="registerForm">
-
-    {% csrf_token %}
-
-    <!-- ALL YOUR INPUTS/STEPS/CARDS STAY HERE -->
-
     <button type="submit" class="btn-submit" id="submitBtn">
         Create Account &amp; Go to Payment →
     </button>
-
-</form>
 
     </form>
 </div>
@@ -670,8 +662,7 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
     // In a real Django app this would just be this.submit()
     // For demo we simulate a brief delay then navigate
     setTimeout(() => {
-        this.submit();          // uncomment for real Django
-        // window.location = '/payment/';  // fallback demo redirect
+        this.submit();          // Django handles POST → redirects to /payment/
     }, 1500);
 });
 </script>
